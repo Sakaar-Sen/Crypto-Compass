@@ -2,7 +2,7 @@ import requests
 # from collections import OrderedDict
 
 def get_sentiment(title):
-    model="KernAI/stock-news-distilbert"
+    model="mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
 
     API_URL = "https://api-inference.huggingface.co/models/{0}".format(model)
     API_TOKEN = "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"

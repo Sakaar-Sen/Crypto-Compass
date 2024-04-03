@@ -31,7 +31,7 @@ def get_price_prediction_single(asset):
     model = LinearRegression()
     model.fit(X.reshape(-1, 2), y)
 
-    futuresDays = [7, 14, 30, 60]
+    futuresDays = [7, 30, 60]
     predictions = model.predict([[len(X) + i, (len(X) + i) ** 2] for i in futuresDays])
     return list(predictions)
 
