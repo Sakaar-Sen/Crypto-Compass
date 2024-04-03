@@ -9,6 +9,7 @@ Flask-SQLAlchemy==3.0.5
 requests-html
 pandas-ta==0.3.14b0
 numpy
+scikit-learn
 ccxt==4.1.10
 scipy==1.10.0
 beautifulsoup4

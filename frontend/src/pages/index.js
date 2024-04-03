@@ -18,7 +18,7 @@ export default function Home() {
                 textShadow: "0px 4px 4px rgba(0, 0, 0, 0.7)",
               }}
             >
-              Crypto Insights
+              Crypto Compass
             </p>
             <p className="text-[1.2rem] md:text-[1.2rem] mt-6 mb-6 tracking-[.1rem]">
               Tracking over <span className="font-semibold">100+</span>{" "}
