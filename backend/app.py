@@ -12,9 +12,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-cors = CORS(app, resources={r"/": {"origins": "*"}})
-app.config['CORS_HEADERS'] = 'Content-Type'
-
+#cors = CORS(app, resources={r"/": {"origins": "*"}})
+CORS(app)
 
 app.config["JWT_SECRET_KEY"] = "hajhsi29327nas"  
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 36000
