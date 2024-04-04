@@ -5,16 +5,22 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [userStatus, setUserStatus] = useState("");
 
   const checkMyStatus = async () => {
     try {
       const response = await fetch("http://127.0.0.1:5000/api/me", {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+
       });
       if (response.ok) {
         const data = await response.json();
         // Process the data received
         console.log(data);
+        setUserStatus(data.msg);
       } else {
         // Handle errors
         console.error("Failed to fetch user information");
@@ -37,7 +43,17 @@ export default function Login() {
           password,
         }),
       });
+
+      
+
+
       if (response.ok) {
+        const data = await response.json();
+              // set localStorage jwt
+
+        localStorage.setItem("jwt", data.jwt);
+
+
         // Handle successful login
         // For example, redirect to another page
       } else {
@@ -51,9 +67,10 @@ export default function Login() {
 
   return (
     <div>
-      <button onClick={checkMyStatus}>CHECk</button>
+      <button onClick={checkMyStatus}>Check</button>
+      <h1>Status: {userStatus}</h1>
       <form
-        onSubmit={handleLogin} // Added onSubmit event handler for form submission
+        onSubmit={handleLogin}
         className="relative space-y-3 rounded-md bg-white p-6 shadow-xl lg:p-10 border border-gray-100 ml-[32rem] mr-[32rem]"
       >
         <h1 className="text-xl font-semibold lg:text-2xl">Login</h1>
@@ -66,8 +83,8 @@ export default function Login() {
             id="username"
             name="username"
             placeholder="Username"
-            value={username} // Use the state value for username
-            onChange={(e) => setUsername(e.target.value)} // Update username state
+            value={username}
+            onChange={(e) => setUsername(e.target.value)} 
             className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3 outline-none focus:ring"
           />
         </div>
@@ -78,8 +95,8 @@ export default function Login() {
             id="password"
             name="password"
             placeholder="******"
-            value={password} // Use the state value for password
-            onChange={(e) => setPassword(e.target.value)} // Update password state
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
             className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3 outline-none focus:ring"
           />
         </div>
@@ -88,7 +105,7 @@ export default function Login() {
 
         <div>
           <button
-            type="submit" // Changed button type to submit for form submission
+            type="submit" 
             className="mt-5 w-full rounded-md bg-blue-600 p-2 text-center font-semibold text-white outline-none focus:ring"
           >
             Get Started

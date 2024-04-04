@@ -18,7 +18,7 @@ CORS(app)
 app.config["JWT_SECRET_KEY"] = "hajhsi29327nas"  
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 36000
 app.config["JWT_COOKIE_SECURE"] = False
-app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+app.config["JWT_TOKEN_LOCATION"] = ["json", "headers"]
 app.config["JWT_COOKIE_CSRF_PROTECT"] = False
 
 
@@ -86,15 +86,13 @@ def login():
     if user is None:
         return jsonify({"msg": "Bad username or password"}), 401
     
-    subscription = user.subscription
-    additional_claims = {"identity": username,"sub": subscription} #change to free
-   
-    access_token = create_access_token(identity=username, additional_claims=additional_claims)
-    response = jsonify({"msg": "login successful"})
-    set_access_cookies(response, access_token)
+    response = {
+        "jwt" : create_access_token(identity=username, additional_claims={"identity": username, "sub": user.subscription}),
+        "msg": "login successful"
+    }
     
-    return response, 200
-
+    return jsonify(response), 200
+    
 
 @app.route("/api/logout", methods=["POST"])
 def logout_with_cookies():
