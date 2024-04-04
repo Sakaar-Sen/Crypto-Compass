@@ -14,13 +14,12 @@ export default function Login() {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
-
       });
       if (response.ok) {
         const data = await response.json();
         // Process the data received
         console.log(data);
-        setUserStatus(data.msg);
+        setUserStatus(data.sub);
       } else {
         // Handle errors
         console.error("Failed to fetch user information");
@@ -44,15 +43,11 @@ export default function Login() {
         }),
       });
 
-      
-
-
       if (response.ok) {
         const data = await response.json();
-              // set localStorage jwt
+        // set localStorage jwt
 
         localStorage.setItem("jwt", data.jwt);
-
 
         // Handle successful login
         // For example, redirect to another page
@@ -84,7 +79,7 @@ export default function Login() {
             name="username"
             placeholder="Username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)} 
+            onChange={(e) => setUsername(e.target.value)}
             className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3 outline-none focus:ring"
           />
         </div>
@@ -95,8 +90,8 @@ export default function Login() {
             id="password"
             name="password"
             placeholder="******"
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3 outline-none focus:ring"
           />
         </div>
@@ -105,7 +100,7 @@ export default function Login() {
 
         <div>
           <button
-            type="submit" 
+            type="submit"
             className="mt-5 w-full rounded-md bg-blue-600 p-2 text-center font-semibold text-white outline-none focus:ring"
           >
             Get Started
