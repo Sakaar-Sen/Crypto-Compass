@@ -116,8 +116,7 @@ def upgrade():
         
         additional_claims = {"identity": username,"sub": "pro"}
         access_token = create_access_token(identity=username,additional_claims=additional_claims)
-        response = jsonify({"msg": "upgrade successful"})
-        set_access_cookies(response, access_token)
+        response = jsonify({"msg": "upgrade successful", "jwt": access_token})
         return response
     
     else:
@@ -138,8 +137,7 @@ def downgrade():
         
         additional_claims = {"identity": username,"sub": "free"}
         access_token = create_access_token(identity=username,additional_claims=additional_claims)
-        response = jsonify({"msg": "downgrade successful"})
-        set_access_cookies(response, access_token)
+        response = jsonify({"msg": "downgrade successful", "jwt": access_token})
         return response
     else:
         return jsonify({"msg": "Already free"}), 400
