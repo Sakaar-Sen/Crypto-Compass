@@ -1,49 +1,65 @@
 "use client";
 import Link from "next/link";
-import React from "react";
-import { useState, useEffect } from "react";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import React, { useState, useEffect } from "react";
+import { AiOutlineMenu, AiOutlineClose, AiOutlineUser } from "react-icons/ai";
+import axios from "axios";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
-  const [color, setColor] = useState("transparent");
-  const [textColor, setTextColor] = useState("white");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userIdentity, setUserIdentity] = useState("");
 
   const handleNav = () => {
     setNav(!nav);
   };
 
-  // useEffect(() => {
-  //   const changeColor = () => {
-  //     if (window.scrollY >= 190) {
-  //       setColor('#000000');
-  //       setTextColor('#ffffff');
-  //     } else {
-  //       setColor('#000000');
-  //       setTextColor('#ffffff');
-  //     }
-  //     console.log(window.scrollY);
-  //   };
-  //   window.addEventListener('scroll', changeColor);
-  // }, []);
+  const handleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggedIn(false);
+      localStorage.removeItem("jwt");
+      setUserIdentity("");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:5000/api/me", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        });
+        if (response.data.identity) {
+          setIsLoggedIn(true);
+          setUserIdentity(response.data.identity);
+        } else {
+          setIsLoggedIn(false);
+          setUserIdentity("");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setIsLoggedIn(false);
+        setUserIdentity("");
+      }
+    };
+  
+    fetchUserData();
+  }, []);
 
   return (
-    <div
-      className={
-        "left-0 top-0 w-full z-10 ease-in duration-30 bg-gray-900 bg-opacity-50 backdrop-blur-sm" +
-        " fixed "
-      }
-    >
-      <div className="max-w-[1240px] m-auto flex justify-between items-center py-2 px-4  text-white">
+    <div className="left-0 top-0 w-full z-10 ease-in duration-30 bg-gray-900 bg-opacity-50 backdrop-blur-sm fixed">
+      <div className="max-w-[1240px] m-auto flex justify-between items-center py-2 px-4 text-white">
         <Link href="/">
-          <h1 style={{ color: `${textColor}` }} className="font-bold text-2xl ">
-            Crypto Insights
-          </h1>
+          <h1 className="font-bold text-2xl">Crypto Compass</h1>
         </Link>
-        <ul
-          style={{ color: `${textColor}` }}
-          className="hidden sm:flex align-middle"
-        >
+        <ul className="hidden sm:flex items-center">
           <li className="py-2 px-4">
             <Link href="/" className="hover:text-gray-300 duration-150">
               Home
@@ -54,39 +70,69 @@ const Navbar = () => {
               Explore
             </Link>
           </li>
-          <li className="py-2 px-4 ">
-            <Link
-              href="/analytics"
-              className="hover:text-gray-300 duration-150"
-            >
+          <li className="py-2 px-4">
+            <Link href="/analytics" className="hover:text-gray-300 duration-150">
               Analytics
             </Link>
           </li>
-          <li className="py-2 px-4 ">
+          <li className="py-2 px-4">
             <Link href="/learn" className="hover:text-gray-300 duration-150">
               Learn
             </Link>
           </li>
-          <li className="py-2 px-4 ">
+          <li className="py-2 px-4">
             <Link href="/news" className="hover:text-gray-300 duration-150">
               News
             </Link>
           </li>
+          {isLoggedIn ? (
+            <li className="py-2 px-4 relative">
+              <button
+                onClick={handleDropdown}
+                className="flex items-center hover:text-gray-300 duration-150"
+              >
+                <AiOutlineUser className="mr-2" />
+                {userIdentity}
+              </button>
+              {showDropdown && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
+                  <Link
+                    href="/pricing"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Change Plan
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </li>
+          ) : (
+            <li className="py-2 px-4">
+              <Link href="/login" className="hover:text-gray-300 duration-150">
+                Login
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* Mobile Button */}
         <div onClick={handleNav} className="block sm:hidden z-50">
           {nav ? (
-            <AiOutlineClose size={20} style={{ color: "" }} />
+            <AiOutlineClose size={20} />
           ) : (
-            <AiOutlineMenu size={20} style={{ color: `${textColor}` }} />
+            <AiOutlineMenu size={20} />
           )}
         </div>
         {/* Mobile Menu */}
         <div
           className={
             nav
-              ? "sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300"
+              ? "sm:hidden absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-center items-center w-full h-screen bg-black text-center ease-in duration-300"
               : "sm:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300"
           }
         >
@@ -121,6 +167,29 @@ const Navbar = () => {
             >
               <Link href="/news">News</Link>
             </li>
+            {isLoggedIn ? (
+              <li
+                onClick={handleNav}
+                className="p-4 text-4xl hover:text-gray-500"
+              >
+                <Link href="/pricing">Change Plan</Link>
+              </li>
+            ) : (
+              <li
+                onClick={handleNav}
+                className="p-4 text-4xl hover:text-gray-500"
+              >
+                <Link href="/login">Login</Link>
+              </li>
+            )}
+            {isLoggedIn && (
+              <li
+                onClick={handleLogout}
+                className="p-4 text-4xl hover:text-gray-500"
+              >
+                Logout
+              </li>
+            )}
           </ul>
         </div>
       </div>

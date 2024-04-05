@@ -84,23 +84,15 @@ def login():
     user = User.query.filter_by(username=username, password=password).first()
     
     if user is None:
-        return jsonify({"msg": "Bad username or password"}), 401
+        return jsonify({"msg": "Invalid credentials"}), 401
     
-    subscription = user.subscription
-    additional_claims = {"identity": username,"sub": subscription} #change to free
-   
-    access_token = create_access_token(identity=username, additional_claims=additional_claims)
-    response = jsonify({"msg": "login successful"})
-    set_access_cookies(response, access_token)
+    msg = "login successful"
+    additional_claims = {"identity": username,"sub": user.subscription}
+    access_token = create_access_token(identity=username,additional_claims=additional_claims)
+    response = jsonify({"msg": msg, "jwt": access_token})
     
     return response, 200
 
-
-@app.route("/api/logout", methods=["POST"])
-def logout_with_cookies():
-    response = jsonify({"msg": "logout successful"})
-    unset_jwt_cookies(response)
-    return response
 
 
 @app.route("/api/me", methods=["GET"])
