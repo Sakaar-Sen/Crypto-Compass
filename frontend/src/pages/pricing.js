@@ -18,7 +18,12 @@ export default function Pricing() {
 
   const handleDowngrade = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/sub/downgrade");
+      const response = await fetch("http://127.0.0.1:5000/api/sub/downgrade", {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      
+      });
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("jwt", data.jwt);
