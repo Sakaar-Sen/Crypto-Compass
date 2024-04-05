@@ -9,6 +9,7 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userIdentity, setUserIdentity] = useState("");
+  const [userSub, setuserSub] = useState("");
 
   const handleNav = () => {
     setNav(!nav);
@@ -39,6 +40,7 @@ const Navbar = () => {
         if (response.data.identity) {
           setIsLoggedIn(true);
           setUserIdentity(response.data.identity);
+          setuserSub(response.data.sub);
         } else {
           setIsLoggedIn(false);
           setUserIdentity("");
@@ -49,7 +51,7 @@ const Navbar = () => {
         setUserIdentity("");
       }
     };
-  
+
     fetchUserData();
   }, []);
 
@@ -71,7 +73,10 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="py-2 px-4">
-            <Link href="/analytics" className="hover:text-gray-300 duration-150">
+            <Link
+              href="/analytics"
+              className="hover:text-gray-300 duration-150"
+            >
               Analytics
             </Link>
           </li>
@@ -122,11 +127,7 @@ const Navbar = () => {
 
         {/* Mobile Button */}
         <div onClick={handleNav} className="block sm:hidden z-50">
-          {nav ? (
-            <AiOutlineClose size={20} />
-          ) : (
-            <AiOutlineMenu size={20} />
-          )}
+          {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
         </div>
         {/* Mobile Menu */}
         <div

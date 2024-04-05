@@ -65,7 +65,7 @@ const ExploreElement = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 text-black flex">
+    <div className="min-h-screen bg-black text-white flex">
       {/* Price Feed */}
       <div className="w-1/2 px-4">
         <div className="py-4">
@@ -77,7 +77,7 @@ const ExploreElement = () => {
               {data.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-lg shadow-lg p-4 cursor-pointer hover:bg-gray-100"
+                  className="bg-black rounded-lg border border-white p-4 cursor-pointer hover:bg-gray-800"
                   onClick={() => setSelectedAsset(item)}
                 >
                   <h2 className="text-lg font-bold">{item.index}</h2>
@@ -90,7 +90,7 @@ const ExploreElement = () => {
       </div>
 
       {/* Asset Details */}
-      <div className="w-1/2 px-4">
+      <div className="w-1/2 px-4 sticky top-14 h-screen overflow-y-auto">
         {selectedAsset ? (
           <div className="py-4">
             <h1 className="text-3xl font-bold">{selectedAsset.index}</h1>

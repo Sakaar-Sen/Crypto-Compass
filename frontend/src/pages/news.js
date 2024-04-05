@@ -13,6 +13,9 @@ export default function News() {
   const [summary, setSummary] = useState("");
   const [sentiment, setSentiment] = useState("");
   const [isLoadingSummary, setIsLoadingSummary] = useState(false);
+  const [userIdentity, setUserIdentity] = useState("");
+  const [userSub, setuserSub] = useState("");
+
   const itemsPerPage = 15;
 
   useEffect(() => {
@@ -46,6 +49,29 @@ export default function News() {
       console.log(formattedData);
       setNews(formattedData);
     };
+
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:5000/api/me", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        });
+        if (response.data.identity) {
+          setUserIdentity(response.data.identity);
+          setuserSub(response.data.sub);
+          console.log(response.data.sub);
+        } else {
+          setUserIdentity("");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setUserIdentity("");
+      }
+    };
+
+    fetchUserData();
+
     getNews();
     setLoading(false);
   }, []);
@@ -112,7 +138,7 @@ export default function News() {
           The latest news from the crypto world
         </p>
       </div>
-      <div className="flex justify-center items-start">
+      <div className="flex justify-center items-start pt-[10rem]">
         <div className="grid grid-cols-1 md:grid-cols-2 mt-30 gap-8">
           <div>
             <h2 className="text-gray-100 text-2xl mb-4 ml-4">News List</h2>
