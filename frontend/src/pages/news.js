@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./../styles/news.module.css";
 import Chatbot from "./components/ChatBot";
+import Link from "next/link";
 
 export default function News() {
   const [news, setNews] = useState([]);
@@ -14,7 +15,7 @@ export default function News() {
   const [sentiment, setSentiment] = useState("");
   const [isLoadingSummary, setIsLoadingSummary] = useState(false);
   const [userIdentity, setUserIdentity] = useState("");
-  const [userSub, setuserSub] = useState("");
+  const [userSub, setUserSub] = useState("");
 
   const itemsPerPage = 15;
 
@@ -59,7 +60,7 @@ export default function News() {
         });
         if (response.data.identity) {
           setUserIdentity(response.data.identity);
-          setuserSub(response.data.sub);
+          setUserSub(response.data.sub);
           console.log(response.data.sub);
         } else {
           setUserIdentity("");
@@ -125,10 +126,10 @@ export default function News() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="bg-black">
       <Navbar />
       <Chatbot />
-      <div className="flex justify-center items-center pt-16">
+      {/* <div className="flex justify-center items-center pt-16">
         <h1 className="text-5xl text-gray-100 font-bold mt-12 mb-4 tracking-wide">
           News
         </h1>
@@ -137,7 +138,7 @@ export default function News() {
         <p className="text-gray-300 text-xl mb-8">
           The latest news from the crypto world
         </p>
-      </div>
+      </div> */}
       <div className="flex justify-center items-start pt-[10rem]">
         <div className="grid grid-cols-1 md:grid-cols-2 mt-30 gap-8">
           <div>
@@ -153,38 +154,54 @@ export default function News() {
                   text={newsItem.title}
                   url={newsItem.url}
                   time={newsItem.time}
+                  sub={userSub}
                   onClick={() => handleNewsClick(newsItem)}
                 />
               ))}
           </div>
-          <div>
-            <h2 className="text-gray-100 text-2xl mb-4">News Details</h2>
-            {selectedNews ? (
-              isLoadingSummary ? (
-                <div className="flex justify-center items-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-300"></div>
-                </div>
+          <div className="">
+            <h2 className="text-gray-100 sticky top-[5rem] text-2xl mb-4">News Details</h2>
+            {userSub === "pro" ? (
+              selectedNews ? (
+                isLoadingSummary ? (
+                  <div className="flex  justify-center items-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-300"></div>
+                  </div>
+                ) : (
+                  <div className="sticky top-[7.5rem]">
+                    <h3 className="text-gray-100 text-xl mb-2">
+                      {selectedNews.title}
+                    </h3>
+                    <p className="text-gray-300 mb-4">{summary}</p>
+                    <p className="text-gray-300 mb-4">Sentiment: {sentiment}</p>
+                    <a
+                      href={selectedNews.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:text-blue-700"
+                    >
+                      Source
+                    </a>
+                  </div>
+                )
               ) : (
-                <div>
-                  <h3 className="text-gray-100 text-xl mb-2">
-                    {selectedNews.title}
-                  </h3>
-                  <p className="text-gray-300 mb-4">{summary}</p>
-                  <p className="text-gray-300 mb-4">Sentiment: {sentiment}</p>
-                  <a
-                    href={selectedNews.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:text-blue-700"
-                  >
-                    Source
-                  </a>
+                <div className="text-gray-300 sticky top-[7.5rem]">
+                  Click on a news item to see details.
                 </div>
               )
             ) : (
+            <div className="sticky top-[7rem]">
               <div className="text-gray-300">
-                Click on a news item to see details.
+                You need to upgrade to the Pro plan to access news details.{" "}
               </div>
+              <div>
+                <Link href="/pricing">
+                  <span className="text-blue-500 hover:text-blue-700 cursor-pointer">
+                    Upgrade Now
+                  </span>
+                </Link>
+              </div>
+            </div>
             )}
           </div>
         </div>
@@ -203,8 +220,7 @@ export default function News() {
               className="text-gray-100 text-[1.2rem] border-gray-300 border-solid border-2 px-2 py-1 rounded-lg backdrop-blur hover:bg-gray-800 transition-all duration-250"
               onClick={() => handlePageChange(currentPage - 1)}
             >
-              Previous{" "}
-            </button>
+              Previous{" "}</button>
             <span className="text-white text-[1.2rem]">
               {" "}
               {currentPage} of {totalPages}{" "}
