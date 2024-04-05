@@ -1,11 +1,14 @@
+// ExploreElement.jsx
 import React, { useState, useEffect } from "react";
+import TradingViewWidget from "./TradingViewWidget";
 
 const ExploreElement = () => {
   const [data, setData] = useState([]);
   const [selectedColumns, setSelectedColumns] = useState([]);
   const [error, setError] = useState(null);
-  const [isPro, setIsPro] = useState(false); // Assuming this is determined based on user's subscription status
+  const [isPro, setIsPro] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
+  const [assetName, setAssetName] = useState("BTC/USDT");
 
   const fetchData = async () => {
     try {
@@ -15,16 +18,14 @@ const ExploreElement = () => {
           Authorization: `Bearer ${jwtToken}`,
         },
       });
-
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
-
       const fetchedData = await response.json();
       setData(fetchedData);
       setIsPro(
         fetchedData.some((item) => Object.keys(item).includes("BTC_beta_1d"))
-      ); // Check if the data includes pro columns
+      );
     } catch (error) {
       setError(error);
       console.error("Error fetching data:", error);
@@ -67,7 +68,7 @@ const ExploreElement = () => {
   return (
     <div className="min-h-screen bg-black text-white flex">
       {/* Price Feed */}
-      <div className="w-1/2 px-4">
+      <div className="w-1/3 px-4">
         <div className="py-4">
           <h1 className="text-3xl font-bold">Price Feed</h1>
         </div>
@@ -89,8 +90,25 @@ const ExploreElement = () => {
         </div>
       </div>
 
+      {/* Chart */}
+
+      {<div className="w-1/3 px-4 sticky top-14 h-screen">
+        <TradingViewWidget
+          symbol={
+            selectedAsset
+              ? `BINANCE:${selectedAsset.index.replace("/", "")}`
+              : `BINANCE:${assetName.replace("/", "")}`
+          }
+        />
+      </div>
+      }
+
+
+
+
+
       {/* Asset Details */}
-      <div className="w-1/2 px-4 sticky top-14 h-screen overflow-y-auto">
+      <div className="w-[200px] px-4 sticky top-14 right-0 h-screen overflow-y-auto m-0">
         {selectedAsset ? (
           <div className="py-4">
             <h1 className="text-3xl font-bold">{selectedAsset.index}</h1>
