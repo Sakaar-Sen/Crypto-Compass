@@ -10,8 +10,30 @@ export default function Pricing() {
   useEffect(() => {
     const storedJwt = localStorage.getItem("jwt");
     setJwt(storedJwt);
-  }, []);
-
+  
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/api/me", {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          setCurrentPlan(data.sub);
+        } else {
+          const errorData = await response.json();
+          console.error("Error fetching user:", errorData.msg);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+  
+    fetchUser();
+  }, [jwt]); 
+  
   const handleToggle = () => {
     setIsAnnual(!isAnnual);
   };
@@ -19,10 +41,10 @@ export default function Pricing() {
   const handleDowngrade = async () => {
     try {
       const response = await fetch("http://127.0.0.1:5000/api/sub/downgrade", {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
-      
       });
       const data = await response.json();
       if (response.ok) {
@@ -41,6 +63,8 @@ export default function Pricing() {
   const handleUpgrade = async () => {
     try {
       const response = await fetch("http://127.0.0.1:5000/api/sub/upgrade", {
+        method: "POST",
+
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
@@ -61,7 +85,8 @@ export default function Pricing() {
 
   return (
     <div>
-      <div className="w-screen bg-white py-16">
+      <div className="w-screen bg-white py-16 min-h-screen">
+        <h1 className="text-center text-5xl m-12 font-bold">Pricing</h1>
         <div className="mx-auto px-3 md:max-w-screen-lg">
           <div className="mt-8">
             <div className="mb-14 flex items-center justify-center text-gray-900">
@@ -100,7 +125,8 @@ export default function Pricing() {
                     </p>
                     <button
                       onClick={handleDowngrade}
-                      className="mt-5 inline-flex cursor-pointer rounded-full bg-slate-500 px-8 py-2 font-sans text-sm text-white shadow-sm transition hover:translate-y-1 hover:shadow-md hover:shadow-slate-200"
+                      disabled={currentPlan === "free"}
+                      className={`mt-5 inline-flex cursor-pointer rounded-full bg-slate-500 px-8 py-2 font-sans text-sm text-white shadow-sm transition ${currentPlan === "free" ? "opacity-50" : "hover:translate-y-1 hover:shadow-md hover:shadow-blue-200"}`}
                     >
                       Get Started
                     </button>
@@ -123,7 +149,8 @@ export default function Pricing() {
                     </p>
                     <button
                       onClick={handleUpgrade}
-                      className="mt-5 inline-flex cursor-pointer rounded-full bg-blue-700 px-8 py-2 font-sans text-sm text-white shadow-sm transition hover:translate-y-1 hover:shadow-md hover:shadow-blue-200"
+                      disabled={currentPlan === "pro"}
+                      className={`mt-5 inline-flex cursor-pointer rounded-full bg-slate-500 px-8 py-2 font-sans text-sm text-white shadow-sm transition ${currentPlan === "pro" ? "opacity-50" : "hover:translate-y-1 hover:shadow-md hover:shadow-blue-200"}`}
                     >
                       Get Started
                     </button>
