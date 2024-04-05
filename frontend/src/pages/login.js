@@ -22,6 +22,7 @@ export default function Login() {
       });
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         // set localStorage jwt
         localStorage.setItem("jwt", data.jwt);
         // Redirect to the home page
@@ -86,20 +87,25 @@ export default function Login() {
               className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3 outline-none focus:ring"
             />
           </div>
-          <div className="text-red-500 text-wrap text-sm" style={{ visibility: 'hidden' }}>
-                Password must be at least 8 characters long, contain at least one
-                number, one symbol, and one letter.
-              </div>
+          <div
+            className="text-red-500 text-wrap text-sm"
+            style={{ visibility: "hidden" }}
+          >
+            Password must be at least 8 characters long, contain at least one
+            number, one symbol, and one letter.
+          </div>
           {error && <div className="text-red-500">{error}</div>}
           <div className="flex flex-col items-center">
             <button
               type="submit"
               className="mt-5 w-full rounded-md bg-blue-600 p-2 text-center font-semibold text-white outline-none focus:ring"
             >
-
               Login Now!
             </button>
-            <Link href="/signup" className="mt-4 text-blue-500 hover:text-blue-700">
+            <Link
+              href="/signup"
+              className="mt-4 text-blue-500 hover:text-blue-700"
+            >
               Create an account
             </Link>
           </div>
