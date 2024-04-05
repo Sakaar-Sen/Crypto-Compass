@@ -19,10 +19,10 @@ export default function Pricing() {
   const handleDowngrade = async () => {
     try {
       const response = await fetch("http://127.0.0.1:5000/api/sub/downgrade", {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
-      
       });
       const data = await response.json();
       if (response.ok) {
@@ -41,6 +41,8 @@ export default function Pricing() {
   const handleUpgrade = async () => {
     try {
       const response = await fetch("http://127.0.0.1:5000/api/sub/upgrade", {
+        method: "POST",
+
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
