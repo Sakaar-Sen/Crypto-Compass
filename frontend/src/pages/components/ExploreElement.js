@@ -23,9 +23,7 @@ const ExploreElement = () => {
       }
       const fetchedData = await response.json();
       setData(fetchedData);
-      setIsPro(
-        fetchedData.some((item) => Object.keys(item).includes("BTC_beta_1d"))
-      );
+      setIsPro(fetchedData.some((item) => Object.keys(item).includes("BTC_beta_1d")));
     } catch (error) {
       setError(error);
       console.error("Error fetching data:", error);
@@ -78,7 +76,9 @@ const ExploreElement = () => {
               {data.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-black rounded-lg border border-white p-4 cursor-pointer hover:bg-gray-800"
+                  className={`bg-black rounded-lg p-4 cursor-pointer hover:bg-gray-800 border-2 ${
+                    item.change_1d >= 0 ? "border-green-700" : "border-red-700"
+                  }`}
                   onClick={() => setSelectedAsset(item)}
                 >
                   <h2 className="text-lg font-bold">{item.index}</h2>
@@ -91,8 +91,7 @@ const ExploreElement = () => {
       </div>
 
       {/* Chart */}
-
-      {<div className="w-1/3 px-4 sticky top-14 h-screen">
+      <div className="w-2/3 px-4 sticky top-14 h-screen">
         <TradingViewWidget
           symbol={
             selectedAsset
@@ -101,14 +100,9 @@ const ExploreElement = () => {
           }
         />
       </div>
-      }
-
-
-
-
 
       {/* Asset Details */}
-      <div className="w-[200px] px-4 sticky top-14 right-0 h-screen overflow-y-auto m-0">
+      <div className="w-1/4 px-4 sticky top-14 right-0 h-screen overflow-y-auto m-0">
         {selectedAsset ? (
           <div className="py-4">
             <h1 className="text-3xl font-bold">{selectedAsset.index}</h1>
