@@ -94,7 +94,7 @@ export default function Signup() {
   }, [username]);
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen bg-black">
       <div className="relative">
         <Link href="/login">
           <button className="absolute top-4 left-4 text-gray-500 hover:text-gray-700 focus:outline-none">
@@ -116,12 +116,12 @@ export default function Signup() {
         </Link>
         <form
           onSubmit={handleSignup}
-          className="space-y-3 rounded-md bg-white p-8 shadow-xl lg:p-16 border border-gray-100" // Increase padding here
+          className="space-y-3 rounded-md bg-gray-800 p-6 shadow-xl lg:p-10 border border-gray-700" // Increase padding here
         >
-          <h1 className="text-xl font-semibold lg:text-2xl">Sign Up</h1>
-          <p className="pb-4 text-gray-500">Create a new account</p>
+          <h1 className="text-xl font-semibold lg:text-2xl text-gray-200">Sign Up</h1>
+          <p className="pb-4 text-gray-400">Create a new account</p>
           <div>
-            <label htmlFor="username"> Username </label>
+            <label htmlFor="username" className="text-gray-300"> Username </label>
             <div className="flex flex-col mt-2">
               <input
                 type="text"
@@ -130,7 +130,7 @@ export default function Signup() {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="h-14 w-full rounded-md bg-gray-100 px-3 outline-none focus:ring"
+                className="mt-2 h-12 w-full rounded-md bg-gray-700 px-3 outline-none text-gray-300 focus:ring"
               />
               {username.trim() !== "" && !isUsernameAvailable && (
                 <div className="text-red-500">Username is already taken</div>
@@ -138,7 +138,7 @@ export default function Signup() {
             </div>
           </div>
           <div>
-            <label htmlFor="password"> Password </label>
+            <label htmlFor="password" className="text-gray-300"> Password </label>
             <div className="flex flex-col mt-2">
               <input
                 type="password"
@@ -147,7 +147,7 @@ export default function Signup() {
                 placeholder="******"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-14 w-full rounded-md bg-gray-100 px-3 outline-none focus:ring"
+                className="mt-2 h-12 w-full rounded-md bg-gray-700 px-3 outline-none text-gray-300 focus:ring"
               />
               {showPasswordWarning ? (
                 <div className="text-red-500 text-wrap">
