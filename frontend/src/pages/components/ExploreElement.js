@@ -1,4 +1,3 @@
-// ExploreElement.jsx
 import React, { useState, useEffect } from "react";
 import TradingViewWidget from "./TradingViewWidget";
 
@@ -120,7 +119,7 @@ const ExploreElement = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white flex">
+    <div className="min-h-screen bg-[#0c0f16] text-[#e0e1dd] flex">
       {/* Price Feed */}
       <div className="w-2/5 px-4">
         <div className="py-4">
@@ -132,28 +131,28 @@ const ExploreElement = () => {
                 placeholder="Search"
                 value={searchTerm}
                 onChange={handleSearch}
-                className="bg-gray-800 text-white px-4 py-2 rounded-md mt-2"
+                className="bg-[#1f2533] text-[#e0e1dd] px-4 py-2 rounded-md mt-2"
               />
               <button
-                className="bg-gray-800 text-white px-4 py-2 rounded-md mt-2 ml-2"
+                className="bg-[#1f2533] text-[#e0e1dd] px-4 py-2 rounded-md mt-2 ml-2"
                 onClick={toggleDropdown}
               >
                 Sort By
               </button>
               <button
-                className="bg-gray-800 text-white px-4 py-2 rounded-md mt-2 ml-2"
+                className="bg-[#1f2533] text-[#e0e1dd] px-4 py-2 rounded-md mt-2 ml-2"
                 onClick={toggleSortDirection}
               >
                 {sortDirection === "asc" ? "▲" : "▼"}
               </button>
             </div>
             {showDropdown && (
-              <div className="absolute z-10 bg-gray-800 mt-2 rounded-md shadow-lg">
+              <div className="absolute z-10 bg-[#1f2533] mt-2 rounded-md shadow-lg">
                 {freeUserColumns.map((column) => (
                   <div
                     key={column}
-                    className={`px-4 py-2 hover:bg-gray-700 cursor-pointer ${
-                      sortColumn === column ? "bg-gray-700" : ""
+                    className={`px-4 py-2 hover:bg-[#2d3748] cursor-pointer ${
+                      sortColumn === column ? "bg-[#2d3748]" : ""
                     }`}
                     onClick={() => {
                       sortData(column);
@@ -173,8 +172,10 @@ const ExploreElement = () => {
               {currentItems.map((item, index) => (
                 <div
                   key={index}
-                  className={`bg-black rounded-lg p-4 cursor-pointer hover:bg-gray-800 border-2 ${
-                    item.change_1d >= 0 ? "border-green-700" : "border-red-700"
+                  className={`bg-[#1f2533] rounded-lg p-4 cursor-pointer hover:bg-[#2d3748] border-2 ${
+                    item.change_1d >= 0
+                      ? "border-[#4caf50]"
+                      : "border-[#ff5252]"
                   }`}
                   onClick={() => setSelectedAsset(item)}
                 >
@@ -199,7 +200,7 @@ const ExploreElement = () => {
                     <button
                       onClick={() => paginate(currentPage - 1)}
                       disabled={currentPage === 1}
-                      className={`bg-gray-800 text-white px-3 py-2 rounded-md mx-1 ${
+                      className={`bg-[#1f2533] text-[#e0e1dd] px-3 py-2 rounded-md mx-1 ${
                         currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
                       }`}
                     >
@@ -215,7 +216,7 @@ const ExploreElement = () => {
                     <button
                       onClick={() => paginate(currentPage + 1)}
                       disabled={currentPage === totalPages}
-                      className={`bg-gray-800 text-white px-3 py-2 rounded-md mx-1 ${
+                      className={`bg-[#1f2533] text-[#e0e1dd] px-3 py-2 rounded-md mx-1 ${
                         currentPage === totalPages
                           ? "opacity-50 cursor-not-allowed"
                           : ""
@@ -240,11 +241,10 @@ const ExploreElement = () => {
           }
         />
       </div>
-
       {/* Asset Details */}
       <div className="w-1/4 px-4 sticky top-14 right-0 h-screen m-0">
         {selectedAsset ? (
-          <div className="py-4 bg-gray-800 rounded-lg shadow-lg max-w-xs">
+          <div className="py-4 bg-[#1f2533] rounded-lg shadow-lg max-w-xs">
             <h1 className="text-3xl font-bold px-4 py-2">
               {selectedAsset.index}
             </h1>
