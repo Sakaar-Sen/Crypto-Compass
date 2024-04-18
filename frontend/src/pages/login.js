@@ -12,6 +12,7 @@ export default function Login() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     try {
       const response = await fetch("http://127.0.0.1:5000/api/login", {
         method: "POST",
@@ -20,11 +21,14 @@ export default function Login() {
         },
         body: JSON.stringify({ username, password }),
       });
+
       if (response.ok) {
         const data = await response.json();
         console.log(data);
+
         // set localStorage jwt
         localStorage.setItem("jwt", data.jwt);
+
         // Redirect to the home page
         router.push("/");
       } else {
@@ -37,10 +41,10 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen bg-black">
       <div className="relative">
         <Link href="/">
-          <button className="absolute top-4 left-4 text-gray-500 hover:text-gray-700 focus:outline-none">
+          <button className="absolute top-4 left-4 text-gray-400 hover:text-gray-200 focus:outline-none">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -59,12 +63,16 @@ export default function Login() {
         </Link>
         <form
           onSubmit={handleLogin}
-          className="space-y-3 rounded-md bg-white p-6 shadow-xl lg:p-10 border border-gray-100"
+          className="space-y-3 rounded-md bg-gray-800 p-6 shadow-xl lg:p-10 border border-gray-700"
         >
-          <h1 className="text-xl font-semibold lg:text-2xl">Login</h1>
-          <p className="pb-4 text-gray-500">Sign in to access your account</p>
+          <h1 className="text-xl font-semibold lg:text-2xl text-gray-200">
+            Login
+          </h1>
+          <p className="pb-4 text-gray-400">Sign in to access your account</p>
           <div>
-            <label htmlFor="username"> Username </label>
+            <label htmlFor="username" className="text-gray-300">
+              Username
+            </label>
             <input
               type="text"
               id="username"
@@ -72,19 +80,21 @@ export default function Login() {
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3 outline-none focus:ring"
+              className="mt-2 h-12 w-full rounded-md bg-gray-700 px-3 outline-none text-gray-300 focus:ring"
             />
           </div>
           <div>
-            <label htmlFor="password"> Password </label>
+            <label htmlFor="password" className="text-gray-300">
+              Password
+            </label>
             <input
               type="password"
               id="password"
               name="password"
-              placeholder="******"
+              placeholder="*******"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3 outline-none focus:ring"
+              className="mt-2 h-12 w-full rounded-md bg-gray-700 px-3 outline-none text-gray-300 focus:ring"
             />
           </div>
           <div
@@ -104,7 +114,7 @@ export default function Login() {
             </button>
             <Link
               href="/signup"
-              className="mt-4 text-blue-500 hover:text-blue-700"
+              className="mt-4 text-blue-500 hover:text-blue-300"
             >
               Create an account
             </Link>
