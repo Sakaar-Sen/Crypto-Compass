@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Navbar from './components/Navbar'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -64,23 +66,51 @@ const questions = [
 ];
 
 export default function Module1() {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showAnswer, setShowAnswer] = useState(false);
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-  };
-
-  const handleNextQuestion = () => {
-    setSelectedOption(null);
-    setShowAnswer(false);
-    setCurrentQuestion((prevQuestion) => prevQuestion + 1);
-  };
-
-  const handleShowAnswer = () => {
-    setShowAnswer(true);
-  };
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [showAnswer, setShowAnswer] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); // Define isLoading state
+    const router = useRouter(); // Initialize the router object
+  
+  
+    const handleOptionSelect = (option) => {
+      setSelectedOption(option);
+    };
+  
+    const handleNextQuestion = () => {
+      setSelectedOption(null);
+      setShowAnswer(false);
+      setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+    };
+  
+    const handlePreviousQuestion = () => {
+      setSelectedOption(null);
+      setShowAnswer(false);
+      setCurrentQuestion((prevQuestion) => prevQuestion - 1);
+    };
+  
+    const handleShowAnswer = () => {
+      setShowAnswer(true);
+      // Check if the selected option matches the correct answer
+      const isCorrect = selectedOption === questions[currentQuestion].answer;
+      setSelectedOption({ ...selectedOption, isCorrect }); // Add isCorrect property to the selected option
+    };
+    
+    const handleRouteChange = (url) => {
+        setIsLoading(true);
+        router.push(url);
+      };
+    
+      const LoadingSpinner = () => {
+        return (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white-500"></div>
+          </div>
+        );
+      };
+    
+  
+  
 
   return (
     <div className="bg-black text-white">
@@ -89,21 +119,21 @@ export default function Module1() {
         
       <div className="mb-32 w-full max-w-5xl">
           <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4">Introduction to Cryptocurrency</h2>
+            <h2 className="text-5xl font-bold mb-4">Introduction to Cryptocurrency</h2>
             <p className="mb-6">
               Cryptocurrency is a digital or virtual currency that uses cryptography for security and operates on a decentralized network called blockchain. Here's a deeper look:
             </p>
           </section>
 
           <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4">Blockchain Technology</h2>
+            <h2 className="text-xl font-bold mb-4">Blockchain Technology</h2>
             <p>
               Blockchain is a distributed ledger technology that records transactions across multiple computers in a secure and transparent manner. Each block in the blockchain contains a cryptographic hash of the previous block, creating a chain of blocks that cannot be altered retroactively. This decentralized and tamper-proof nature of blockchain ensures transparency, immutability, and security.
             </p>
           </section>
 
           <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4">Key Terminology</h2>
+            <h2 className="text-xl font-bold mb-4">Key Terminology</h2>
             <p className="mb-4">
               Understanding key cryptocurrency terminology is essential for navigating the crypto space effectively. Some crucial terms include:
             </p>
@@ -116,24 +146,24 @@ export default function Module1() {
           </section>
 
           <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4">Popular Cryptocurrencies</h2>
+            <h2 className="text-5xl font-bold mb-4">Popular Cryptocurrencies</h2>
             <p className="mb-4">
               Let's explore some of the most well-known cryptocurrencies and their characteristics:
             </p>
             <div className="mb-8">
-              <h4 className="text-2xl font-bold mb-2">Bitcoin (BTC)</h4>
+              <h4 className="text-xl font-bold mb-2">Bitcoin (BTC)</h4>
               <p>
                 Bitcoin is the first and most widely recognized cryptocurrency, introduced by an anonymous person or group of people using the pseudonym Satoshi Nakamoto in 2009. Bitcoin operates on a decentralized network and is often referred to as digital gold due to its scarcity and store of value properties.
               </p>
             </div>
             <div className="mb-8">
-              <h4 className="text-2xl font-bold mb-2">Ethereum (ETH)</h4>
+              <h4 className="text-xl font-bold mb-2">Ethereum (ETH)</h4>
               <p>
                 Ethereum is a decentralized platform that enables the creation of smart contracts and decentralized applications (DApps). Unlike Bitcoin, which primarily functions as digital currency, Ethereum's blockchain allows developers to build and deploy programmable contracts and applications.
               </p>
             </div>
             <div>
-              <h4 className="text-2xl font-bold mb-2">Altcoins</h4>
+              <h4 className="text-xl font-bold mb-2">Altcoins</h4>
               <p>
                 Altcoins refer to alternative cryptocurrencies other than Bitcoin. These include cryptocurrencies such as Ripple (XRP), Litecoin (LTC), Cardano (ADA), and many others. Altcoins often offer unique features, use cases, and technological innovations beyond Bitcoin's capabilities.
               </p>
@@ -141,24 +171,24 @@ export default function Module1() {
           </section>
 
           <section>
-            <h2 className="text-3xl font-bold mb-4">Getting Started</h2>
+            <h2 className="text-5xl font-bold mb-4">Getting Started</h2>
             <p className="mb-4">
               Here's how you can get started with cryptocurrency:
             </p>
             <div className="mb-8">
-              <h3 className="text-2xl font-bold mb-2">Setting Up a Wallet</h3>
+              <h4 className="text-xl font-bold mb-2">Setting Up a Wallet</h4>
               <p>
                 Choose a cryptocurrency wallet that meets your needs, considering factors such as security, convenience, and supported currencies. Wallet options include hardware wallets (e.g., Ledger Nano S), software wallets (e.g., Electrum), and mobile wallets (e.g., Trust Wallet).
               </p>
             </div>
             <div className="mb-8">
-              <h3 className="text-2xl font-bold mb-2">Buying Cryptocurrency</h3>
+              <h4 className="text-xl font-bold mb-2">Buying Cryptocurrency</h4>
               <p>
                 To acquire cryptocurrency, you can use cryptocurrency exchanges or peer-to-peer (P2P) platforms. Research different exchanges, verify their security measures and supported cryptocurrencies, and choose one that aligns with your preferences. Popular exchanges include Coinbase, Binance, and Kraken.
               </p>
             </div>
             <div>
-              <h3 className="text-2xl font-bold mb-2">Security Best Practices</h3>
+              <h4 className="text-xl font-bold mb-2">Security Practices</h4>
               <p className="mb-4">
                 Protect your cryptocurrency holdings by implementing robust security practices, such as:
               </p>
@@ -175,7 +205,7 @@ export default function Module1() {
 
         {/* Quiz Section */}
         <section className="mb-12 w-full max-w-5xl">
-          <h2 className="text-3xl font-bold mb-4">Quiz</h2>
+          <h2 className="text-5xl font-bold mb-4">Quiz</h2>
           <p className="text-lg mb-4">Test your knowledge with the following questions:</p>
           {currentQuestion < questions.length && (
             <div className="bg-gray-800 rounded-md p-6">
@@ -200,20 +230,50 @@ export default function Module1() {
               {selectedOption && (
                 <button onClick={handleShowAnswer} className="bg-blue-500 text-white py-2 px-4 rounded">Submit</button>
               )}
-              {showAnswer && (
-                <div className="mt-4">
-                  <p className="text-green-500 font-bold mb-2">Correct Answer:</p>
-                  <p className="mb-2">{questions[currentQuestion].answer}</p>
-                  <p className="text-green-500 font-bold mb-2">Explanation:</p>
-                  <p>{questions[currentQuestion].explanation}</p>
-                  {currentQuestion !== questions.length - 1 && (
-                    <button onClick={handleNextQuestion} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">Next Question</button>
-                  )}
-                </div>
-              )}
+                {showAnswer && (
+  <div className="mt-4">
+    <p className={selectedOption.isCorrect ? "text-green-500 font-bold mb-2" : "text-red-500 font-bold mb-2"}>
+      {selectedOption.isCorrect ? "Your answer is correct!" : "Your answer is incorrect!"}
+    </p>
+    <p className="text-green-500 font-bold mb-2">Correct Answer:</p>
+    <p className="mb-2">{questions[currentQuestion].answer}</p>
+    <p className="text-green-500 font-bold mb-2">Explanation:</p>
+    <p>{questions[currentQuestion].explanation}</p>
+    <div className="flex justify-between mt-8">
+    {currentQuestion > 0 && (
+            <button onClick={handlePreviousQuestion} className="bg-blue-500 text-white py-2 px-4 rounded mr-auto">Previous Question</button>
+          )}
+          {currentQuestion < questions.length && (
+            <button onClick={handleNextQuestion} className="bg-blue-500 text-white py-2 px-4 rounded ml-auto">Next Question</button>
+          )}
+          </div>
+  </div>
+)}
+
+
             </div>
           )}
+          <div className="fixed bottom-8 right-8">
+        <button
+          onClick={() => handleRouteChange('/module-2')}
+          className="bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          Go to Module 2
+        </button>
+        {isLoading && <LoadingSpinner />}
+      </div>
+      <div className="fixed top-16 left-8">
+        <button
+          onClick={() => handleRouteChange('/learn')}
+          className="bg-blue-900 text-white py-2 px-4 rounded"
+        >
+          Back to Learn Page
+        </button>
+        {isLoading && <LoadingSpinner />}
+      </div>
+      
         </section>
+
       </main>
     </div>
   )
