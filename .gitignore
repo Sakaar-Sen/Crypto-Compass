@@ -2,3 +2,5 @@
 *.txt
 frontend/node_modules
 frontend/.next
+backend/instance/users.db
+backend/instance/users.db
