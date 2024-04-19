@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 const questions = [
   {
-    question: "What is the primary technology underlying cryptocurrencies like Bitcoin and Ethereum?",
+    question: "Q-1 What is the primary technology underlying cryptocurrencies like Bitcoin and Ethereum?",
     options: [
       "a) Artificial Intelligence",
       "b) Blockchain",
@@ -20,7 +20,7 @@ const questions = [
     explanation: "Blockchain is the primary technology underlying cryptocurrencies like Bitcoin and Ethereum. It is a decentralized distributed ledger technology that records transactions across multiple computers in a secure and transparent manner. Each block in the blockchain contains a cryptographic hash of the previous block, creating a chain of blocks that cannot be altered retroactively. Blockchain ensures transparency, immutability, and security in cryptocurrency transactions."
   },
   {
-    question: "Which cryptocurrency is often referred to as 'digital gold' due to its scarcity and store of value properties?",
+    question: "Q-2 Which cryptocurrency is often referred to as 'digital gold' due to its scarcity and store of value properties?",
     options: [
       "a) Ethereum (ETH)",
       "b) Litecoin (LTC)",
@@ -31,7 +31,7 @@ const questions = [
     explanation: "Bitcoin is often referred to as 'digital gold' due to its scarcity and store of value properties. Similar to gold, Bitcoin has a finite supply, with only 21 million bitcoins that can ever be mined. This scarcity, combined with its decentralized nature and widespread adoption, has led many investors to view Bitcoin as a hedge against inflation and store of value."
   },
   {
-    question: "What is the purpose of setting up a cryptocurrency wallet?",
+    question: "Q-3 What is the purpose of setting up a cryptocurrency wallet?",
     options: [
       "a) To mine cryptocurrencies",
       "b) To trade cryptocurrencies",
@@ -42,7 +42,7 @@ const questions = [
     explanation: "The primary purpose of setting up a cryptocurrency wallet is to securely store, send, and receive cryptocurrencies. Cryptocurrency wallets come in various forms, including hardware wallets, software wallets, and mobile wallets. They provide users with a unique address for receiving funds and a private key for accessing and controlling their cryptocurrency holdings."
   },
   {
-    question: "Which type of cryptocurrency exchange operates without intermediaries and allows users to trade directly from their wallets?",
+    question: "Q-4 Which type of cryptocurrency exchange operates without intermediaries and allows users to trade directly from their wallets?",
     options: [
       "a) Centralized Exchange (CEX)",
       "b) Over-the-Counter (OTC) Exchange",
@@ -53,7 +53,7 @@ const questions = [
     explanation: "A Decentralized Exchange (DEX) operates without intermediaries and allows users to trade directly from their wallets. Unlike centralized exchanges (CEXs), which require users to deposit funds into exchange-controlled wallets, DEXs allow users to retain control of their funds throughout the trading process. This decentralized approach offers greater security and privacy for traders."
   },
   {
-    question: "What is one of the key risk management techniques recommended for cryptocurrency trading?",
+    question: "Q-5 What is one of the key risk management techniques recommended for cryptocurrency trading?",
     options: [
       "a) Using excessive leverage",
       "b) Avoiding diversification",
@@ -69,6 +69,7 @@ export default function Module1() {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
     const [showAnswer, setShowAnswer] = useState(false);
+    const [score, setScore] = useState(0);
     const [isLoading, setIsLoading] = useState(false); // Define isLoading state
     const router = useRouter(); // Initialize the router object
   
@@ -78,6 +79,10 @@ export default function Module1() {
     };
   
     const handleNextQuestion = () => {
+      if (!selectedOption) {
+        alert("Please select an option before proceeding to the next question.");
+        return;
+      }
       setSelectedOption(null);
       setShowAnswer(false);
       setCurrentQuestion((prevQuestion) => prevQuestion + 1);
@@ -94,6 +99,9 @@ export default function Module1() {
       // Check if the selected option matches the correct answer
       const isCorrect = selectedOption === questions[currentQuestion].answer;
       setSelectedOption({ ...selectedOption, isCorrect }); // Add isCorrect property to the selected option
+      if (isCorrect) {
+        setScore((prevScore) => prevScore + 1);
+      }
     };
     
     const handleRouteChange = (url) => {
@@ -209,8 +217,18 @@ export default function Module1() {
           <p className="text-lg mb-4">Test your knowledge with the following questions:</p>
           {currentQuestion < questions.length && (
             <div className="bg-gray-800 rounded-md p-6">
+                <div className="mb-4">
+                  <div className="h-4 bg-gray-600 rounded-full">
+                    <div
+                      className="h-4 bg-blue-500 rounded-full"
+                      style={{
+                        width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
               <p className="mb-4 text-xl">{questions[currentQuestion].question}</p>
-              <ul className="list-disc pl-6 mb-8">
+              <ul className=" pl-6 mb-8">
                 {questions[currentQuestion].options.map((option, index) => (
                   <li key={index} className="mb-2">
                     <label className="flex items-center">
@@ -240,13 +258,30 @@ export default function Module1() {
     <p className="text-green-500 font-bold mb-2">Explanation:</p>
     <p>{questions[currentQuestion].explanation}</p>
     <div className="flex justify-between mt-8">
-    {currentQuestion > 0 && (
-            <button onClick={handlePreviousQuestion} className="bg-blue-500 text-white py-2 px-4 rounded mr-auto">Previous Question</button>
-          )}
-          {currentQuestion < questions.length && (
-            <button onClick={handleNextQuestion} className="bg-blue-500 text-white py-2 px-4 rounded ml-auto">Next Question</button>
-          )}
-          </div>
+      {currentQuestion > 0 && (
+        <button onClick={handlePreviousQuestion} className="bg-blue-500 text-white py-2 px-4 rounded mr-auto">Previous Question</button>
+      )}
+      {currentQuestion < questions.length - 1 && (
+        <button onClick={handleNextQuestion} className="bg-blue-500 text-white py-2 px-4 rounded ml-auto">Next Question</button>
+      )}
+    </div>
+    {currentQuestion === questions.length - 1 && (
+      <div className="bg-gray-800 rounded-md p-6 mt-8">
+        <h2 className="text-3xl font-bold mb-4">Quiz Completed</h2>
+        <p className="mb-4">Your final score is: {score} out of {questions.length}</p>
+        <button
+          onClick={() => {
+            setCurrentQuestion(0);
+            setScore(0);
+            setSelectedOption(null);
+            setShowAnswer(false);
+          }}
+          className="bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          Retake Quiz
+        </button>
+      </div>
+    )}
   </div>
 )}
 

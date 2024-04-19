@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 const questions = [
   {
-    question: "What is the primary purpose of candlestick patterns in technical analysis?",
+    question: "Q-1 What is the primary purpose of candlestick patterns in technical analysis?",
     options: [
       "a) Providing historical economic data",
       "b) Offering visual representations of price movements",
@@ -20,7 +20,7 @@ const questions = [
     explanation: "Candlestick patterns visually represent price movements over specific time frames, aiding traders in identifying potential trend reversals or continuations."
   },
   {
-    question: "Which indicator assesses overbought or oversold conditions based on recent price changes?",
+    question: "Q-2 Which indicator assesses overbought or oversold conditions based on recent price changes?",
     options: [
       "a) Gross Domestic Product (GDP)",
       "b) Moving Average Convergence Divergence (MACD)",
@@ -31,7 +31,7 @@ const questions = [
     explanation: "The Relative Strength Index (RSI) measures recent price changes to determine overbought or oversold conditions in the market."
   },
   {
-    question: "What is the main purpose of support and resistance levels in technical analysis?",
+    question: "Q-3 What is the main purpose of support and resistance levels in technical analysis?",
     options: [
       "a) Tracking changes in the prices of goods and services",
       "b) Assessing the overall health and performance of an economy",
@@ -42,7 +42,7 @@ const questions = [
     explanation: "Support and resistance levels help traders anticipate potential price reversals or breakout opportunities in the market."
   },
   {
-    question: "What role does industry analysis play in fundamental analysis?",
+    question: "Q-4 What role does industry analysis play in fundamental analysis?",
     options: [
       "a) Assessing a company's liquidity and financial health",
       "b) Evaluating market trends and developments",
@@ -53,7 +53,7 @@ const questions = [
     explanation: "Industry analysis helps investors understand market trends and developments within specific industries or sectors."
   },
   {
-    question: "How do traders use moving averages in technical analysis?",
+    question: "Q-5 How do traders use moving averages in technical analysis?",
     options: [
       "a) To measure unemployment rates",
       "b) To smooth out price data and reveal underlying trends",
@@ -70,6 +70,7 @@ export default function Module1() {
     const [selectedOption, setSelectedOption] = useState(null);
     const [showAnswer, setShowAnswer] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // Define isLoading state
+    const [score, setScore] = useState(0);
     const router = useRouter(); // Initialize the router object
   
     const handleOptionSelect = (option) => {
@@ -77,6 +78,10 @@ export default function Module1() {
     };
   
     const handleNextQuestion = () => {
+      if (!selectedOption) {
+        alert("Please select an option before proceeding to the next question.");
+        return;
+      }
       setSelectedOption(null);
       setShowAnswer(false);
       setCurrentQuestion((prevQuestion) => prevQuestion + 1);
@@ -93,6 +98,9 @@ export default function Module1() {
       // Check if the selected option matches the correct answer
       const isCorrect = selectedOption === questions[currentQuestion].answer;
       setSelectedOption({ ...selectedOption, isCorrect }); // Add isCorrect property to the selected option
+      if (isCorrect) {
+        setScore((prevScore) => prevScore + 1);
+      }
     };
     const handleRouteChange = (url) => {
         setIsLoading(true);
@@ -251,8 +259,18 @@ export default function Module1() {
           <p className="text-lg mb-4">Test your knowledge with the following questions:</p>
           {currentQuestion < questions.length && (
             <div className="bg-gray-800 rounded-md p-6">
+                  <div className="mb-4">
+                  <div className="h-4 bg-gray-600 rounded-full">
+                    <div
+                      className="h-4 bg-blue-500 rounded-full"
+                      style={{
+                        width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
               <p className="mb-4 text-xl">{questions[currentQuestion].question}</p>
-              <ul className="list-disc pl-6 mb-8">
+              <ul className=" pl-6 mb-8">
                 {questions[currentQuestion].options.map((option, index) => (
                   <li key={index} className="mb-2">
                     <label className="flex items-center">
@@ -282,13 +300,30 @@ export default function Module1() {
     <p className="text-green-500 font-bold mb-2">Explanation:</p>
     <p>{questions[currentQuestion].explanation}</p>
     <div className="flex justify-between mt-8">
-    {currentQuestion > 0 && (
-            <button onClick={handlePreviousQuestion} className="bg-blue-500 text-white py-2 px-4 rounded mr-auto">Previous Question</button>
-          )}
-          {currentQuestion < questions.length && (
-            <button onClick={handleNextQuestion} className="bg-blue-500 text-white py-2 px-4 rounded ml-auto">Next Question</button>
-          )}
-          </div>
+      {currentQuestion > 0 && (
+        <button onClick={handlePreviousQuestion} className="bg-blue-500 text-white py-2 px-4 rounded mr-auto">Previous Question</button>
+      )}
+      {currentQuestion < questions.length - 1 && (
+        <button onClick={handleNextQuestion} className="bg-blue-500 text-white py-2 px-4 rounded ml-auto">Next Question</button>
+      )}
+    </div>
+    {currentQuestion === questions.length - 1 && (
+      <div className="bg-gray-800 rounded-md p-6 mt-8">
+        <h2 className="text-3xl font-bold mb-4">Quiz Completed</h2>
+        <p className="mb-4">Your final score is: {score} out of {questions.length}</p>
+        <button
+          onClick={() => {
+            setCurrentQuestion(0);
+            setScore(0);
+            setSelectedOption(null);
+            setShowAnswer(false);
+          }}
+          className="bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          Retake Quiz
+        </button>
+      </div>
+    )}
   </div>
 )}
 
