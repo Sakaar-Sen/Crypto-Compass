@@ -14,7 +14,8 @@ const ExploreElement = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
     try {
@@ -33,9 +34,11 @@ const ExploreElement = () => {
       setIsPro(
         fetchedData.some((item) => Object.keys(item).includes("BTC_beta_1d"))
       );
+      setIsLoading(false); // Set isLoading to false after data is fetched
     } catch (error) {
       setError(error);
       console.error("Error fetching data:", error);
+      setIsLoading(false); // Set isLoading to false in case of an error
     }
   };
 
@@ -116,6 +119,13 @@ const ExploreElement = () => {
 
   if (error) {
     return <div>Error: {error.message}</div>;
+  }
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#0c0f16] text-[#e0e1dd] flex justify-center items-center">
+        <div className="text-3xl font-bold">Loading...</div>
+      </div>
+    );
   }
 
   return (
