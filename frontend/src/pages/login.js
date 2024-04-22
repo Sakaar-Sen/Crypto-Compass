@@ -30,7 +30,7 @@ export default function Login() {
         localStorage.setItem("jwt", data.jwt);
 
         // Redirect to the home page
-        router.push("/");
+        router.push("/explore");
       } else {
         // Handle login failure
         setError("Invalid username or password");
