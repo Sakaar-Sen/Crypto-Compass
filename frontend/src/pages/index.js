@@ -13,10 +13,7 @@ export default function Home() {
         <div className="flex-row">
           <div className="flex center items-center flex-col-reverse gap-6 md:flex-row md:gap-32">
             <div className="text-white flex-column align-middle text-center center">
-              <p
-                className="text-white text-5xl md:text-8xl font-bold tracking-[.3rem]"
-                style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.7)" }}
-              >
+              <p className="text-white text-5xl md:text-8xl font-bold tracking-[.3rem]">
                 Crypto Compass
               </p>
               <p className="text-[1.2rem] md:text-[1.2rem] mt-6 mb-6 tracking-[.1rem]">
@@ -33,9 +30,16 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <Image src="/btcimage.jpg" width={400} height={400} style={{
-              rotate: "-20deg",
-            }} alt="btc" />
+            <Image
+              src="/btcimage.jpg"
+              width={400}
+              height={400}
+              className=""
+              style={{
+                rotate: "-0deg",
+              }}
+              alt="btc"
+            />
           </div>
         </div>
       </div>
