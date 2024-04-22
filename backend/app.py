@@ -7,6 +7,7 @@ from helper.summarize import summarize
 from helper.newsSentiment import get_sentiment
 from helper.getPriceFeed import get_price_feed
 from helper.pricePrediction import get_price_prediction_all
+from helper.chatbot import get_response_from_chatbot
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
@@ -237,6 +238,17 @@ def get_price_prediction_all_cached():
 def price_predictions():
     return jsonify(get_price_prediction_all_cached())
 
+
+@app.route("/api/chat", methods=["POST"])
+@jwt_required()
+def chat():
+    claims = get_jwt()
+    user_prompt = request.json.get("prompt", None)
+    if user_prompt is None:
+        return jsonify({"msg": "Prompt is required"}), 400
+    
+    response = get_response_from_chatbot(user_prompt)
+    return jsonify({"response": response})
 
 
 # with app.app_context():

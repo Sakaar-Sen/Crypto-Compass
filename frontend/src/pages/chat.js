@@ -13,10 +13,10 @@ export default function chatbot() {
   const sendMessage = async () => {
     setBotMessage("...")
     try {
-      const url = "/api/ask";
+      const url = "http://127.0.0.1:5000/api/chat";
       const response = await fetch(url, {
         method: 'POST',
-        body: JSON.stringify({ question: userMessage }),
+        body: JSON.stringify({ prompt: userMessage }),
         headers: {
           'Content-Type': 'application/json'
         }

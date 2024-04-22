@@ -126,9 +126,8 @@ export default function News() {
   };
 
   return (
-    <div className="bg-black">
+    <div className="bg-black min-h-screen">
       <Navbar />
-      <Chatbot />
       {/* <div className="flex justify-center items-center pt-16">
         <h1 className="text-5xl text-gray-100 font-bold mt-12 mb-4 tracking-wide">
           News

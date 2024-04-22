@@ -1,12 +1,6 @@
-# import sklearn
 from sklearn.linear_model import LinearRegression
 import ccxt
-# import time
-# from datetime import datetime
-# import numpy as np
 from save_thread_result import ThreadWithResult
-# import threading
-# from matplotlib import pyplot as plt
 import pandas as pd
 
 assets = ["BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT", "XRPUSDT"]

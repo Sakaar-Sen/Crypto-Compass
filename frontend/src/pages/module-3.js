@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import Navbar from './components/Navbar'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Chatbot from './components/ChatBot';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -121,6 +122,7 @@ export default function Module1() {
   return (
     <div className="bg-black text-white">
       <Navbar />
+      <Chatbot  />
       <main className={`${inter.className} flex min-h-screen flex-col items-center justify-between p-24`}>
         
       <div className="mb-32 w-full max-w-5xl">

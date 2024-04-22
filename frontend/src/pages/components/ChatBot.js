@@ -17,16 +17,17 @@ function Chatbot() {
     setUserInput("");
     setBotResponse("Thinking...");
 
-    const response = await fetch("/api/ask", {
+    const response = await fetch("http://127.0.0.1:5000/api/chat", {
       method: "POST",
-      body: JSON.stringify({ question: userInput }),
+      body: JSON.stringify({ prompt: userInput }),
       headers: {
+        "Authorization": "Bearer " + localStorage.getItem("jwt"),
         "Content-Type": "application/json",
       },
     });
 
     const data = await response.json();
-    setBotResponse(data.answer);
+    setBotResponse(data.response);
   };
 
   const handleKeyPress = (e) => {
@@ -41,7 +42,7 @@ function Chatbot() {
   };
 
   return (
-    <div className="fixed md:bottom-10 md:right-10 bottom-5 right-5 z-50">
+    <div className="fixed md:bottom-20 md:right-10 bottom-5 right-5 z-50">
       <div className="flex flex-col">
         <div className="flex justify-end">
           {showChatbot === false ? (
