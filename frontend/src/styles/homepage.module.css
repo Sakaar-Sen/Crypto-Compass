@@ -1,6 +1,7 @@
 
 .container{
-    background-image: url("../../public/q2.jpg");
+    /* background-image: url("../../public/q2.jpg"); */
+    background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
