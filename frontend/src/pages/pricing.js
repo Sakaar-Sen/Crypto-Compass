@@ -83,9 +83,9 @@ export default function Pricing() {
   };
 
   return (
-    <div className="dark:bg-gray-800 text-white">
+    <div className="dark:bg-gray-800 text-white overflow-hidden">
       <div className="w-screen bg-gray-800 py-16 min-h-screen">
-        <h1 className="text-center text-5xl m-12 font-bold">Pricing</h1>
+        <h1 className="text-center text-5xl font-bold">Pricing</h1>
         <div className="mx-auto px-3 md:max-w-screen-lg">
           <div className="mt-8">
             <div className="mb-14 flex items-center justify-center text-white">
@@ -117,7 +117,7 @@ export default function Pricing() {
                       Free
                     </h3>
                     <p className="mt-2 font-sans text-3xl font-bold leading-9 lg:text-5xl">
-                      $0
+                      ₹0
                     </p>
                     <p className="mt-2 mb-4 font-sans text-base lg:text-base lg:leading-6">
                       per month
@@ -126,15 +126,26 @@ export default function Pricing() {
                       {" "}
                       <li className="flex items-center mt-2">
                       <span className="mr-2">✅</span>
-                        Real-Time Price Data with charts
+                        Real-Time Prices Of Cryptocurrencies
+                      </li>
+
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        Charts                       
+                      </li>
+
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        7 Essential Crypto Metrics                      
+                      </li>
+
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        Learning Modules + quizzes
                       </li>
                       <li className="flex items-center mt-2">
                       <span className="mr-2">✅</span>
-                        Learning Modules with quiz
-                      </li>
-                      <li className="flex items-center mt-2">
-                      <span className="mr-2">✅</span>
-                        Latest News
+                        Latest News Headlines
                       </li>
                     </ul>
                     <button
@@ -161,7 +172,7 @@ export default function Pricing() {
                       Pro
                     </h3>
                     <p className="mt-2 font-sans text-3xl font-bold leading-9 lg:text-5xl">
-                      ${isAnnual ? "480" : "54"}/ user
+                       ₹{isAnnual ? "2200" : "200"}/ user
                     </p>
                     <p className="mt-2 mb-4 font-sans text-base lg:text-base lg:leading-6">
                       per month, billed {isAnnual ? "annually" : "monthly"}
@@ -170,23 +181,30 @@ export default function Pricing() {
                       {" "}
                       <li className="flex items-center mt-2">
                          <span className="mr-2">✅</span>
-                        Real-Time Price Data with Charts
+                        Everything included in Free 
                       </li>
+
+                      
                       <li className="flex items-center mt-2">
                       <span className="mr-2">✅</span>
-                        Learning Modules with quiz
+                        Learning Chatbot
                       </li>
+
                       <li className="flex items-center mt-2">
                       <span className="mr-2">✅</span>
-                        Chatbot
+                        12 Additional Premium Crypto Metrics 
+                      </li>
+
+                      <li className="flex items-center mt-2">
+                      
+                      
+                      <span className="mr-2">✅</span>
+                        Price Predictions
                       </li>
                       <li className="flex items-center mt-2">
+                      
                       <span className="mr-2">✅</span>
-                        Price Prediction
-                      </li>
-                      <li className="flex items-center mt-2">
-                      <span className="mr-2">✅</span>
-                        News Summeraization and Sentiment Analysis
+                        News Summarization and Sentiment Analysis
                       </li>
                     </ul>
                     <button
