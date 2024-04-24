@@ -1,9 +1,9 @@
 
 .container{
-    /* background-image: url("../../public/q2.jpg"); */
-    background-color: black;
-    background-repeat: no-repeat;
-    background-size: cover;
+    /* background-image: url("../../public/bn1.jpg"); */
+    background-color: rgb(0, 0, 0);
+    background-blend-mode: difference;
+    background-repeat: repeat;
     background-position: center;
     min-height:100vh;
     overflow-y: hidden;
@@ -15,7 +15,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
 }
 
 

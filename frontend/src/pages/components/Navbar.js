@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { AiOutlineMenu, AiOutlineClose, AiOutlineUser } from "react-icons/ai";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -10,6 +11,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userIdentity, setUserIdentity] = useState("");
   const [userSub, setuserSub] = useState("");
+  const router = useRouter();
 
   const handleNav = () => {
     setNav(!nav);
@@ -24,6 +26,7 @@ const Navbar = () => {
       setIsLoggedIn(false);
       localStorage.removeItem("jwt");
       setUserIdentity("");
+      router.push("/");
     } catch (error) {
       console.error("Error during logout:", error);
     }
