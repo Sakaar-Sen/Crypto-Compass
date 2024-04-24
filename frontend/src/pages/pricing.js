@@ -10,7 +10,7 @@ export default function Pricing() {
   useEffect(() => {
     const storedJwt = localStorage.getItem("jwt");
     setJwt(storedJwt);
-  
+
     const fetchUser = async () => {
       try {
         const response = await fetch("http://127.0.0.1:5000/api/me", {
@@ -18,7 +18,7 @@ export default function Pricing() {
             Authorization: `Bearer ${jwt}`,
           },
         });
-  
+
         if (response.ok) {
           const data = await response.json();
           setCurrentPlan(data.sub);
@@ -30,10 +30,10 @@ export default function Pricing() {
         console.error("Error fetching user:", error);
       }
     };
-  
+
     fetchUser();
-  }, [jwt]); 
-  
+  }, [jwt]);
+
   const handleToggle = () => {
     setIsAnnual(!isAnnual);
   };
@@ -51,7 +51,7 @@ export default function Pricing() {
         localStorage.setItem("jwt", data.jwt);
         setJwt(data.jwt);
         setCurrentPlan("free");
-        router.push("/");
+        router.push("/explore"); 
       } else {
         console.error("Error downgrading:", data.msg);
       }
@@ -59,12 +59,11 @@ export default function Pricing() {
       console.error("Error downgrading:", error);
     }
   };
-
+  
   const handleUpgrade = async () => {
     try {
       const response = await fetch("http://127.0.0.1:5000/api/sub/upgrade", {
         method: "POST",
-
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
@@ -74,7 +73,7 @@ export default function Pricing() {
         localStorage.setItem("jwt", data.jwt);
         setJwt(data.jwt);
         setCurrentPlan("pro");
-        router.push("/");
+        router.push("/explore"); 
       } else {
         console.error("Error upgrading:", data.msg);
       }
@@ -84,13 +83,13 @@ export default function Pricing() {
   };
 
   return (
-    <div>
-      <div className="w-screen bg-white py-16 min-h-screen">
+    <div className="dark:bg-gray-800 text-white">
+      <div className="w-screen bg-gray-800 py-16 min-h-screen">
         <h1 className="text-center text-5xl m-12 font-bold">Pricing</h1>
         <div className="mx-auto px-3 md:max-w-screen-lg">
           <div className="mt-8">
-            <div className="mb-14 flex items-center justify-center text-gray-900">
-              <div className="inline-flex items-center justify-center rounded-full border font-semibold bg-slate-100 p-2">
+            <div className="mb-14 flex items-center justify-center text-white">
+              <div className="inline-flex items-center justify-center rounded-full border font-semibold bg-gray-700 p-2">
                 <button
                   className={`inline-flex cursor-pointer items-center justify-center py-1 px-5 text-center font-sans text-sm normal-case ${
                     !isAnnual ? "rounded-full bg-sky-400 text-white" : ""
@@ -109,10 +108,10 @@ export default function Pricing() {
                 </button>
               </div>
             </div>
-            <ul className="mb-6 space-y-3 text-gray-900 sm:space-y-0 md:grid md:grid-cols-2 md:gap-4 lg:gap-8 xl:col-span-10 xl:col-start-3">
-              <li className="bg-white relative overflow-hidden rounded-lg border border-black shadow-md text-left">
+            <ul className="mb-6 space-y-3 text-white sm:space-y-0 md:grid md:grid-cols-2 md:gap-4 lg:gap-8 xl:col-span-10 xl:col-start-3">
+              <li className="bg-gray-700 relative overflow-hidden rounded-lg border border-black shadow-md text-left">
                 <div className="mt-8 w-full">
-                  <span className="absolute top-0 block h-8 w-full bg-slate-500"></span>
+                  <span className="absolute top-0 block h-8 w-full bg-blue-700"></span>
                   <div className="p-5 text-center md:w-full lg:px-5 lg:py-8">
                     <h3 className="font-serif text-xl font-bold lg:text-2xl lg:leading-7">
                       Free
@@ -123,10 +122,29 @@ export default function Pricing() {
                     <p className="mt-2 mb-4 font-sans text-base lg:text-base lg:leading-6">
                       per month
                     </p>
+                    <ul className="p-5 text-center">
+                      {" "}
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        Real-Time Price Data with charts
+                      </li>
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        Learning Modules with quiz
+                      </li>
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        Latest News
+                      </li>
+                    </ul>
                     <button
                       onClick={handleDowngrade}
                       disabled={currentPlan === "free"}
-                      className={`mt-5 inline-flex cursor-pointer rounded-full bg-slate-500 px-8 py-2 font-sans text-sm text-white shadow-sm transition ${currentPlan === "free" ? "opacity-50" : "hover:translate-y-1 hover:shadow-md hover:shadow-blue-200"}`}
+                      className={`mt-5 inline-flex cursor-pointer rounded-full bg-slate-500 px-8 py-2 font-sans text-sm text-white shadow-sm transition ${
+                        currentPlan === "free"
+                          ? "opacity-50"
+                          : "hover:translate-y-1 hover:shadow-md hover:shadow-blue-200"
+                      }`}
                     >
                       Get Started
                     </button>
@@ -134,7 +152,8 @@ export default function Pricing() {
                   {/* ... */}
                 </div>
               </li>
-              <li className="bg-white relative overflow-hidden rounded-lg border border-black shadow-md text-left">
+
+              <li className="bg-gray-700 relative overflow-hidden rounded-lg border border-black shadow-md text-left">
                 <div className="mt-8 w-full">
                   <span className="absolute top-0 block h-8 w-full bg-blue-700"></span>
                   <div className="p-5 text-center md:w-full lg:px-5 lg:py-8">
@@ -147,10 +166,37 @@ export default function Pricing() {
                     <p className="mt-2 mb-4 font-sans text-base lg:text-base lg:leading-6">
                       per month, billed {isAnnual ? "annually" : "monthly"}
                     </p>
+                    <ul className="p-5 text-center">
+                      {" "}
+                      <li className="flex items-center mt-2">
+                         <span className="mr-2">✅</span>
+                        Real-Time Price Data with Charts
+                      </li>
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        Learning Modules with quiz
+                      </li>
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        Chatbot
+                      </li>
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        Price Prediction
+                      </li>
+                      <li className="flex items-center mt-2">
+                      <span className="mr-2">✅</span>
+                        News Summeraization and Sentiment Analysis
+                      </li>
+                    </ul>
                     <button
                       onClick={handleUpgrade}
                       disabled={currentPlan === "pro"}
-                      className={`mt-5 inline-flex cursor-pointer rounded-full bg-slate-500 px-8 py-2 font-sans text-sm text-white shadow-sm transition ${currentPlan === "pro" ? "opacity-50" : "hover:translate-y-1 hover:shadow-md hover:shadow-blue-200"}`}
+                      className={`mt-5 inline-flex cursor-pointer rounded-full bg-slate-500 px-8 py-2 font-sans text-sm text-white shadow-sm transition ${
+                        currentPlan === "pro"
+                          ? "opacity-50"
+                          : "hover:translate-y-1 hover:shadow-md hover:shadow-blue-200"
+                      }`}
                     >
                       Get Started
                     </button>
