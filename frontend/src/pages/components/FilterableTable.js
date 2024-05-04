@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const transformData = (data) => {
   return Object.entries(data).map(([asset, predictions]) => ({
@@ -10,16 +10,56 @@ const transformData = (data) => {
 };
 
 const FilterableTable = () => {
-  const [predictions, setPredictions] = useState({
-    BNBUSDT: [620.1622306814916, 709.4861921189306, 838.936572774489],
-    BTCUSDT: [74403.44951070451, 82467.5841681532, 93928.00098281362],
-    ETHUSDT: [3858.00122750789, 4259.713307461665, 4834.625435094249],
-    SOLUSDT: [196.7710202488122, 226.10197395796632, 267.66818801728056],
-    XRPUSDT: [0.5617813997520916, 0.5493221104057322, 0.5298344083824706],
-  });
+  const [predictions, setPredictions] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPredictions = async () => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:5000/api/price/predictions",
+          {
+            method: "GET",
+
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("jwt"),
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log(data);
+        setPredictions(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPredictions();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const transformedData = transformData(predictions);
+
+  if (transformedData.length === 0) {
+    return <div>No predictions available</div>;
+  }
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex flex-col justify-center items-center">
+    <div className="bg-black text-white min-h-screen flex flex-col justify-center items-center">
       <h1 className="text-4xl font-bold mb-8">Cryptocurrency Predictions</h1>
       <div className="w-full max-w-4xl">
         <table className="w-full border-collapse">
@@ -40,7 +80,7 @@ const FilterableTable = () => {
             </tr>
           </thead>
           <tbody>
-            {transformData(predictions).map((item, index) => (
+            {transformedData.map((item, index) => (
               <tr key={index}>
                 <td className="py-2 px-4 border border-gray-700">
                   {item.asset}

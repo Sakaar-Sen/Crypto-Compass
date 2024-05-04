@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TradingViewWidget from "./TradingViewWidget";
+import Image from "next/image";
 
 const ExploreElement = () => {
   const [data, setData] = useState([]);
@@ -129,7 +130,7 @@ const ExploreElement = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0c0f16] text-[#e0e1dd] flex">
+    <div className="min-h-screen bg-black text-[#e0e1dd] flex">
       {/* Price Feed */}
       <div className="w-2/5 px-4">
         <div className="py-4">
@@ -252,9 +253,9 @@ const ExploreElement = () => {
         />
       </div>
       {/* Asset Details */}
-      <div className="w-1/4 px-4 sticky top-14 right-0 h-screen m-0">
+      <div className="w-1/4 px-4 sticky top-14 right-0 h-screen m-0 ">
         {selectedAsset ? (
-          <div className="py-4 bg-[#1f2533] rounded-lg shadow-lg max-w-xs">
+          <div className="py-4 bg-[#1f2533] rounded-lg min-h-[500px] shadow-lg max-w-xs">
             <h1 className="text-3xl font-bold px-4 py-2">
               {selectedAsset.index}
             </h1>
@@ -265,6 +266,10 @@ const ExploreElement = () => {
                   <span>{selectedAsset[key]}</span>
                 </div>
               ))}
+                {}
+              <div>
+                <Image src="/blur.png" width={200} height={400} />
+              </div>
             </div>
           </div>
         ) : (
