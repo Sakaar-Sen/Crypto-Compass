@@ -90,6 +90,10 @@ export default function News() {
     setSelectedNews(newsItem);
     setIsLoadingSummary(true);
 
+    if (userSub !== "pro") {
+      return;
+    }
+
     try {
       // Get summary
       const summaryResponse = await axios.post(

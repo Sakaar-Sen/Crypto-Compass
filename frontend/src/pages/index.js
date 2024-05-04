@@ -36,7 +36,7 @@ export default function Home() {
               height={400}
               className=""
               style={{
-                rotate: "-0deg",
+                rotate: "-20deg",
               }}
               alt="btc"
             />
