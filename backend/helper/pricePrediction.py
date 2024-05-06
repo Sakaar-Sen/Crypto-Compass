@@ -45,6 +45,7 @@ def get_price_prediction_all():
     return predictions
 
 
+
 # start = time.time()
 # print(get_price_prediction_all())
 # end = time.time()

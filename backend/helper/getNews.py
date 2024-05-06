@@ -5,6 +5,10 @@ from datetime import datetime
 import time
 
 def get_news(limit=1000):
+    
+    if limit <= 0:
+        return []
+    
     url = "https://news.treeofalpha.com/api/news?limit={}".format(limit)
 
     r = requests.get(url)
