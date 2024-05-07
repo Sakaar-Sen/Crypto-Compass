@@ -80,7 +80,7 @@ const Navbar = () => {
               href="/analytics"
               className="hover:text-gray-300 duration-150"
             >
-              Analytics
+              Price Predictions
             </Link>
           </li>
           <li className="py-2 px-4">
@@ -157,7 +157,7 @@ const Navbar = () => {
               onClick={handleNav}
               className="p-4 text-4xl hover:text-gray-500"
             >
-              <Link href="/analytics">Analytics</Link>
+              <Link href="/analytics">Price Predictions</Link>
             </li>
             <li
               onClick={handleNav}
