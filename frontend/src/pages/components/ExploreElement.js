@@ -267,9 +267,9 @@ const ExploreElement = () => {
                 </div>
               ))}
                 {}
-              <div>
+              {/* <div>
                 <Image src="/blur.png" width={200} height={400} />
-              </div>
+              </div> */}
             </div>
           </div>
         ) : (
