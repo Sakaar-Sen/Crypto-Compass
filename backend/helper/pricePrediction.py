@@ -2,6 +2,7 @@ from sklearn.linear_model import LinearRegression
 import ccxt
 from save_thread_result import ThreadWithResult
 import pandas as pd
+import time
 
 assets = ["BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT", "XRPUSDT"]
 
@@ -46,7 +47,7 @@ def get_price_prediction_all():
 
 
 
-# start = time.time()
-# print(get_price_prediction_all())
-# end = time.time()
-# print(end - start)
+start = time.time()
+print(get_price_prediction_all())
+end = time.time()
+print(end - start)

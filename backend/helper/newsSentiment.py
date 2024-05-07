@@ -1,5 +1,4 @@
 import requests
-# from collections import OrderedDict
 
 def get_sentiment(title):
     model="mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
