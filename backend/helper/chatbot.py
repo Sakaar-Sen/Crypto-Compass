@@ -6,11 +6,13 @@ system_prompt = """You are a learning agent named Eva for a website called Crypt
 
 The user asks: """
 
+# Function to get response from chatbot
 def get_response_from_chatbot(user_prompt):
     try:
         prompt = system_prompt + user_prompt
         payload = {"model":{"id":"llama3","name":"Llama3"},"messages":[{"role":"user","content":prompt}],"temperature":"0.2","max_tokens":256,"top_p":"0.2","repetition_penalty":"1.2"}
 
+        # Request to akash API
         r = requests.post(api, json=payload)
         print(r.text)
         return str(r.text)

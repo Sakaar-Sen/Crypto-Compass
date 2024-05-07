@@ -243,6 +243,9 @@ def price_predictions():
 @jwt_required()
 def chat():
     claims = get_jwt()
+    if claims["sub"] == "free":
+        return jsonify({"detail": "You need to upgrade to PRO to use the chatbot."})
+
     user_prompt = request.json.get("prompt", None)
     if user_prompt is None:
         return jsonify({"msg": "Prompt is required"}), 400

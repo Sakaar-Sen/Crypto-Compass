@@ -3,6 +3,7 @@ import requests
 from pprint import pprint
 from datetime import datetime
 
+
 def get_news(limit=1000):
     
     if limit <= 0:
