@@ -9,8 +9,7 @@ The user asks: """
 def get_response_from_chatbot(user_prompt):
     try:
         prompt = system_prompt + user_prompt
-        payload = {"model":{"id":"llama3","name":"Llama3"}
-                ,"messages":[{"role":"user","content":prompt}],"temperature":"0.2","max_tokens":256,"top_p":"0.2","repetition_penalty":"1.2"}
+        payload = {"model":{"id":"llama3","name":"Llama3"},"messages":[{"role":"user","content":prompt}],"temperature":"0.2","max_tokens":256,"top_p":"0.2","repetition_penalty":"1.2"}
 
         r = requests.post(api, json=payload)
         print(r.text)
@@ -19,3 +18,5 @@ def get_response_from_chatbot(user_prompt):
         return "Chatbot is unavailable at the moment. Please try again later."
         
 
+
+# print(get_response_from_chatbot('hello'))
