@@ -17,7 +17,7 @@ app = Flask(__name__)
 CORS(app)
 
 app.config["JWT_SECRET_KEY"] = "hajhsi29327nas"  
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 36000
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 360000
 app.config["JWT_COOKIE_SECURE"] = False
 app.config["JWT_TOKEN_LOCATION"] = ["headers"]
 app.config["JWT_COOKIE_CSRF_PROTECT"] = False
