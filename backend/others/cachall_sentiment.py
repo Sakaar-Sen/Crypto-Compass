@@ -9,7 +9,7 @@ s = requests.Session()
 
 
 
-headers = {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjY0NTAzMCwianRpIjoiYWU0YjU3MDgtZWJjNy00Mzc3LWFjYjktMDZlOGUyYmRkOWQwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InBybyIsIm5iZiI6MTcxMjY0NTAzMCwiZXhwIjoxNzEyNjgxMDMwLCJpZGVudGl0eSI6ImFkbWluMjMifQ.5XByW75T6TlhcOV5ZIuYyxLidwv4MuJ6d-9bqKoeUGY"}
+headers = {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxNTA2NjczMCwianRpIjoiZjI2NjdjYWEtZDI0Zi00NmJkLWFkYTQtMTFkZjUzNjM2YWMzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InBybyIsIm5iZiI6MTcxNTA2NjczMCwiZXhwIjoxNzE1NDI2NzMwLCJpZGVudGl0eSI6ImFkbWluMjMifQ.gVv45jToBGfKY0jbj0DWK-fxrhh494m99VeA2E0uMfw"}
 
 r = s.get(url + 'api/news', headers=headers)
 data = r.json()
