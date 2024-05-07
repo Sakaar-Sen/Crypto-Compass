@@ -18,3 +18,4 @@ def get_response_from_chatbot(user_prompt):
     except:
         return "Chatbot is unavailable at the moment. Please try again later."
         
+

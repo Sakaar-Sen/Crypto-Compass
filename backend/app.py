@@ -218,7 +218,7 @@ def pricefeed():
     elif subscription == 'pro':
         return jsonify(get_price_feed("pro"))
     else:
-        return jsonify(error="Invalid JWT"), 400
+        return jsonify(error="error occured"), 400
     
 
 def get_price_prediction_all_cached():
