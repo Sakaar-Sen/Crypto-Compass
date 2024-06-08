@@ -145,7 +145,7 @@ export default function News() {
       <div className="flex justify-center items-start pt-[10rem]">
         <div className="grid grid-cols-1 md:grid-cols-2 mt-30 gap-8">
           <div>
-            <h2 className="text-gray-100 text-2xl mb-4 ml-4">News List</h2>
+            <h2 className="text-gray-100 text-2xl mb-4 ml-4">News Headline</h2>
             {news
               .slice(
                 (currentPage - 1) * itemsPerPage,
