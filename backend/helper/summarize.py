@@ -5,7 +5,7 @@ from helper.scrapeNewsFromUrl import scrape_news
 def query(payload):
     model="Falconsai/text_summarization"
     API_URL = "https://api-inference.huggingface.co/models/{0}".format(model)
-    API_TOKEN = "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"
+    API_TOKEN = ""
     headers = {"Authorization": f"Bearer {API_TOKEN}", "wait_for_model": "true"}
     response = requests.post(API_URL, headers=headers, json=payload)
     
